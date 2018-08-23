@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace="com.wonnie.sbt.board.mapper.AmsMapper">
+
+    <select id="selectUserList" resultType="com.wonnie.sbt.board.domain.UserVO">
+	<![CDATA[
+		SELECT
+			name,
+			id,
+			team_id,
+			position
+		FROM
+			person_tb
+	]]>
+	</select>
+	
+	<select id="selectCrudList" resultType="com.wonnie.sbt.board.domain.CrudVO">
+	<![CDATA[
+		SELECT
+			name,
+			id,
+			auth_id,
+			c,
+			r,
+			u,
+			d
+		FROM
+			crud_tb
+	]]>
+	</select>
+	
+	<select id="selectMapList1" resultType="com.wonnie.sbt.board.domain.MapVO">
+	<![CDATA[
+		SELECT
+			auth,
+			person
+		FROM
+			map_tb
+		WHERE
+			person IS NOT NULL
+	]]>
+	</select>
+	
+	<select id="selectMapList2" resultType="com.wonnie.sbt.board.domain.MapVO">
+	<![CDATA[
+		SELECT
+			auth,
+			group_id
+		FROM
+			map_tb
+		WHERE
+			group_id IS NOT NULL
+	]]>
+	</select>
+	
+	<select id="selectTeamList" resultType="com.wonnie.sbt.board.domain.TeamVO">
+	<![CDATA[
+		SELECT
+			id,
+			name
+		FROM
+			team_tb
+	]]>
+	</select>
+	
+	<select id="selectGroupList" resultType="com.wonnie.sbt.board.domain.GroupVO">
+	<![CDATA[
+		SELECT
+			name,
+			id
+		FROM
+			group_tb
+	]]>
+	</select>
+	
+	<select id="selectGroupMapList1" resultType="com.wonnie.sbt.board.domain.GroupMapVO">
+	<![CDATA[
+		SELECT
+			team,
+			group_id
+		FROM
+			group_map_tb
+		WHERE
+			team IS NOT NULL
+	]]>
+	</select>
+	
+	<select id="selectGroupMapList2" resultType="com.wonnie.sbt.board.domain.GroupMapVO">
+	<![CDATA[
+		SELECT
+			person,
+			group_id
+		FROM
+			group_map_tb
+		WHERE
+			person IS NOT NULL
+	]]>
+	</select>
+	
+	<insert id="insertCrud" parameterType="com.wonnie.sbt.board.domain.CrudVO">
+	<![CDATA[
+	INSERT INTO CRUD_TB (name, id, auth_id, c, r, u, d)
+	VALUES (#{name}, #{id}, #{auth_id}, #{c}, #{r}, #{u}, #{d});
+	]]>
+	</insert>
+	
+	<insert id="insertMap" parameterType="com.wonnie.sbt.board.domain.MapVO">
+	<![CDATA[
+	INSERT INTO MAP_TB (auth, person)
+	VALUES (#{auth}, #{person});
+	]]>
+	</insert>
+	
+	<insert id="insertPerson" parameterType="com.wonnie.sbt.board.domain.UserVO">
+	<![CDATA[
+	INSERT INTO PERSON_TB (name, id, position, team_id)
+	VALUES (#{name}, #{id}, #{position}, #{team_id});
+	]]>
+	</insert>
+	
+	<insert id="insertGroup" parameterType="com.wonnie.sbt.board.domain.GroupVO">
+	<![CDATA[
+	INSERT INTO GROUP_TB (name, id)
+	VALUES (#{name}, #{id});
+	]]>
+	</insert>
+	
+	<delete id="deleteCrud" parameterType="String">
+	<![CDATA[
+	DELETE FROM crud_tb
+	WHERE id = #{id};
+	]]>
+	</delete>
+	
+	<delete id="deletePerson" parameterType="String">
+	<![CDATA[
+	DELETE FROM person_tb
+	WHERE id = #{id};
+	]]>
+	</delete>
+	
+	<delete id="deleteMap" parameterType="String">
+	<![CDATA[
+	DELETE FROM map_tb
+	WHERE person = #{person};
+	]]>
+	</delete>
+	
+	<delete id="deleteMap2" parameterType="String">
+	<![CDATA[
+	DELETE FROM map_tb
+	WHERE group = #{group};
+	]]>
+	</delete>
+	
+	<delete id="deleteGroup" parameterType="String">
+	<![CDATA[
+	DELETE FROM group_tb
+	WHERE id = #{id};
+	]]>
+	</delete>
+
+</mapper>
